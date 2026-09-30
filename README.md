@@ -2,39 +2,9 @@
 
 A fast, dependency-free C++ tool that plots sine, cosine, tangent, cosecant, secant, and cotangent right in your terminal — with smooth Unicode Braille curves, ANSI colors, π-based axis labels, function overlays, and `A·f(Bx + C) + D` transforms.
 
-![functions overview](assets/functions_overview.png)
+![trig_visualizer plotting sine and cosine in a terminal](assets/terminal_demo.png)
 
-## Example
-
-```
-$ trig_visualizer sin cos
-
-sine, cosine
-
-                                    + 1.5
-                                    |
-                                    |
-⠉⠑⠢⡀ ⢀⠔⠊⠉⠉⠑⠢⡀                   ⢀⠔⠊⠉⠉⠑1⡀ ⢀⠔⠊⠉⠉⠑⠢⡀                   ⢀⠔⠊⠉
-   ⠈⣦⠃      ⠈⢆                 ⡠⠃   |  ⠈⣦⠃      ⠈⢆                 ⡠⠃
-   ⡰⠁⢣        ⢣               ⡰⠁    |  ⡰⠁⢣        ⢣               ⡰⠁
-  ⡜   ⠱⡀       ⠱⡀            ⡜      + 0.5 ⠱⡀       ⠱⡀            ⡜
- ⡜     ⠱⡀       ⠱⡀          ⡜       |⡜     ⠱⡀       ⠱⡀          ⡜
-⠜       ⠱⡀       ⠱⡀        ⡜        ⡜       ⠱⡀       ⠱⡀        ⡜
-+--------⢣--------⢣-------⡰⠁-------⡰⠁--------⢣--------⢣-------⡰⠁-------⡰
--2π    -3π/2     -π⢣     -π/2     ⡰⠁|       π/2       π⢣     3π/2     2π
-           ⢣        ⢣   ⡰⠁       ⡰⠁ |          ⢣        ⢣   ⡰⠁       ⡰⠁
-            ⠱⡀       ⠱⡀⡜        ⡜   + -0.5      ⠱⡀       ⠱⡀⡜        ⡜
-             ⠑⡄      ⢀⠟⡄      ⢀⠎    |            ⠑⡄      ⢀⠟⡄      ⢀⠎
-              ⠈⠢⢄⣀⣀⡠⠔⠁ ⠈⠢⢄⣀⣀⡠⠔⠁     |             ⠈⠢⢄⣀⣀⡠⠔⠁ ⠈⠢⢄⣀⣀⡠⠔⠁
-                                    + -1
-                                    |
-                                    + -1.5
-
-  ── sine  (opposite / hypotenuse)
-  ── cosine  (adjacent / hypotenuse)
-```
-
-In a real terminal each curve is drawn in its own color.
+The screenshot above is real program output (`trig_visualizer sin cos`), rendered by [`assets/generate_screenshot.py`](assets/generate_screenshot.py).
 
 ## Features
 
@@ -162,7 +132,9 @@ The canvas is a grid of character cells, each holding a 2×4 Braille dot matrix 
 ├── .github/workflows/
 │   └── ci.yml            # build + test on Linux, macOS, Windows
 ├── assets/
-│   ├── generate_diagrams.py
+│   ├── generate_screenshot.py    # renders the README terminal screenshot
+│   ├── generate_diagrams.py      # regenerates the matplotlib diagrams
+│   ├── terminal_demo.png
 │   ├── functions_overview.png
 │   └── unit_circle.png
 ├── CMakeLists.txt
@@ -170,11 +142,20 @@ The canvas is a grid of character cells, each holding a 2×4 Braille dot matrix 
 └── README.md
 ```
 
-## Regenerating the diagrams
+## Regenerating the images
 
-The reference plots at the top of this README were generated with matplotlib and are checked into `assets/` so they render on GitHub without extra tooling:
+All README images are checked into `assets/` so they render on GitHub without extra tooling.
+
+![functions overview](assets/functions_overview.png)
+
+The terminal screenshot is generated from real program output; the reference diagrams are drawn with matplotlib:
 
 ```bash
+# terminal screenshot (build the project first)
+pip install Pillow
+python assets/generate_screenshot.py build/trig_visualizer
+
+# matplotlib reference diagrams
 pip install matplotlib numpy
 python assets/generate_diagrams.py
 ```
